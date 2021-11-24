@@ -7,27 +7,50 @@ main() => runApp(PerguntaApp());
 
 class _PerguntaAppState extends State<PerguntaApp> {
   var _perguntaSelecionada = 0;
+  var _pontuacaoTotal = 0;
   final _perguntas = const [
     {
       'texto': 'Qual é o game preferido ?',
-      'respostas': ['LOL', 'CS', 'GodOfWar', 'Valorant'],
+      'respostas': [
+        {'texto': 'LOL', 'pontuacao': 10},
+        {'texto': 'CS', 'pontuacao': 0},
+        {'texto': 'GodOfWar', 'pontuacao': 0},
+        {'texto': 'Valorant', 'pontuacao': 0},
+      ],
     },
     {
       'texto': 'Qual é a pessoa que ele mais ama?',
-      'respostas': ['Elen', 'Mae', 'Lixa', 'Computador Pessoal'],
+      'respostas': [
+        {'texto': 'Elen', 'pontuacao': 10},
+        {'texto': 'Juliana', 'pontuacao': 0},
+        {'texto': 'Lixa', 'pontuacao': 0},
+        {'texto': 'Computador Pessoal', 'pontuacao': 0},
+      ],
     },
     {
       'texto': 'Qual é a epoca que ele mais gosta?',
-      'respostas': ['Natal', 'Pascoa', 'Aniversario', 'Ferias'],
+      'respostas': [
+        {'texto': 'Natal', 'pontuacao': 0},
+        {'texto': 'Pascoa', 'pontuacao': 0},
+        {'texto': 'Aniversario', 'pontuacao': 0},
+        {'texto': 'Ferias', 'pontuacao': 10},
+      ],
     },
   ];
 
-  void _responder() {
+  void _responder(int pontuacao) {
     if (temPerguntaSelecionada) {
       setState(() {
         _perguntaSelecionada++;
+        _pontuacaoTotal += pontuacao;
       });
     }
+
+    print(_pontuacaoTotal);
+  }
+
+  bool get temPerguntaSelecionada {
+    return _perguntaSelecionada < _perguntas.length;
   }
 
   @override
@@ -36,7 +59,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
     //    in respostas.cast()) {
     //  widgets.add(Resposta(textoResp, _responder));
     // }
-
+///// parei na aula 65.......
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -48,7 +71,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
                 perguntas: _perguntas,
                 perguntaSelecionada: _perguntaSelecionada,
                 quantoResponder: _responder)
-            : Resultado(),
+            : Resultado(_pontuacaoTotal),
       ),
     );
   }
